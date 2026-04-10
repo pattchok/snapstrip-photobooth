@@ -25,4 +25,4 @@ live at: *(coming soon)*
 
 ## status
 
-work in progress — building this in the open. contributions and ideas welcome!
+work in progress; building this in the open. contributions and ideas welcome!
