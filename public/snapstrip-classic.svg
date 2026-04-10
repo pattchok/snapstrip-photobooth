@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 780" fill="none">
+<style>
+  @media (prefers-color-scheme: dark) {
+    .strip-bg { fill: #2A2A2A; }
+    .ink { stroke: #E8E4DC; fill: none; }
+    .ink-fill { fill: #E8E4DC; }
+    .frame1 { fill: #5C2A3A; }
+    .frame2 { fill: #3A4A20; }
+    .frame3 { fill: #1A3A4A; }
+    .frame4 { fill: #3A2A5A; }
+    .sprocket { stroke: #E8E4DC; }
+  }
+  @media (prefers-color-scheme: light) {
+    .strip-bg { fill: #FFFCF8; }
+    .ink { stroke: #2A2A2A; fill: none; }
+    .ink-fill { fill: #2A2A2A; }
+    .frame1 { fill: #FFE0E8; }
+    .frame2 { fill: #E8FFD6; }
+    .frame3 { fill: #D6EDFF; }
+    .frame4 { fill: #EDE0FF; }
+    .sprocket { stroke: #2A2A2A; }
+  }
+</style>
+
+<path class="strip-bg ink" d="M198 18 C200 15, 482 14, 484 18 C487 21, 486 758, 484 760 C481 763, 200 762, 198 760 C195 757, 196 21, 198 18Z" stroke-width="3.5"/>
+
+<rect class="sprocket" x="206" y="36" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="106" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="176" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="246" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="316" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="386" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="456" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="526" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="206" y="596" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+
+<rect class="sprocket" x="462" y="36" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="106" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="176" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="246" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="316" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="386" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="456" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="526" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+<rect class="sprocket" x="462" y="596" width="14" height="10" rx="2.5" stroke-width="2.5" fill="none"/>
+
+<path class="frame1 ink" d="M228 30 L454 31 L453 158 L229 157Z" stroke-width="2.8"/>
+<path class="frame2 ink" d="M229 170 L453 171 L454 296 L228 295Z" stroke-width="2.8"/>
+<path class="frame3 ink" d="M228 308 L454 309 L453 434 L229 433Z" stroke-width="2.8"/>
+<path class="frame4 ink" d="M229 446 L453 447 L454 572 L228 571Z" stroke-width="2.8"/>
+
+<line class="ink" x1="490" y1="8" x2="496" y2="-4" stroke-width="3" stroke-linecap="round"/>
+<line class="ink" x1="504" y1="4" x2="512" y2="-2" stroke-width="3" stroke-linecap="round"/>
+<line class="ink" x1="500" y1="16" x2="510" y2="14" stroke-width="3" stroke-linecap="round"/>
+
+<path class="ink-fill" d="M184 12 L187 4 L190 12 L198 15 L190 18 L187 26 L184 18 L176 15Z"/>
+
+</svg>

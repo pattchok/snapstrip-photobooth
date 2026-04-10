@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" fill="none">
+<style>
+  @media (prefers-color-scheme: dark) {
+    .ink { stroke: #E8E4DC; fill: none; }
+    .ink-fill { fill: #E8E4DC; }
+    .body-fill { fill: #3A3A3A; }
+    .lens-outer { fill: #1A3A4A; }
+    .lens-inner { fill: #2A5A6A; }
+    .flash-fill { fill: #5C4A20; }
+    .btn-fill { fill: #5C2A3A; }
+    .grip-fill { fill: #444; }
+  }
+  @media (prefers-color-scheme: light) {
+    .ink { stroke: #2A2A2A; fill: none; }
+    .ink-fill { fill: #2A2A2A; }
+    .body-fill { fill: #FFFCF8; }
+    .lens-outer { fill: #D6EDFF; }
+    .lens-inner { fill: #EAF4FF; }
+    .flash-fill { fill: #FFFDE8; }
+    .btn-fill { fill: #FFE0E8; }
+    .grip-fill { fill: #F0EDE8; }
+  }
+</style>
+
+<path class="body-fill ink" d="M148 160 C145 156, 152 148, 240 148 L262 108 C265 102, 295 100, 330 100 C365 100, 395 102, 398 108 L420 148 C508 148, 536 156, 532 160 L538 380 C540 390, 530 400, 340 402 C150 400, 140 390, 142 380Z" stroke-width="6"/>
+
+<rect class="grip-fill ink" x="148" y="200" width="32" height="120" rx="6" stroke-width="5"/>
+
+<path class="flash-fill ink" d="M185 170 L240 171 L239 198 L186 197Z" stroke-width="5"/>
+<line class="ink" x1="196" y1="164" x2="200" y2="154" stroke-width="5" stroke-linecap="round"/>
+<line class="ink" x1="212" y1="162" x2="212" y2="150" stroke-width="5" stroke-linecap="round"/>
+<line class="ink" x1="228" y1="164" x2="224" y2="154" stroke-width="5" stroke-linecap="round"/>
+
+<circle class="lens-outer ink" cx="340" cy="272" r="88" stroke-width="6"/>
+<circle class="lens-inner ink" cx="340" cy="272" r="58" stroke-width="5"/>
+<circle class="ink" cx="340" cy="272" r="30" stroke-width="5"/>
+<circle class="ink-fill" cx="320" cy="252" r="10"/>
+<circle class="ink-fill" cx="308" cy="268" r="5"/>
+
+<circle class="btn-fill ink" cx="480" cy="178" r="18" stroke-width="5"/>
+
+<rect class="ink" x="440" y="166" width="20" height="8" rx="3" stroke-width="5" fill="none"/>
+
+<path class="ink" d="M420 390 L420 420 C420 430, 440 432, 440 420 L440 394" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+<line class="ink" x1="548" y1="130" x2="556" y2="116" stroke-width="5.5" stroke-linecap="round"/>
+<line class="ink" x1="564" y1="126" x2="574" y2="120" stroke-width="5.5" stroke-linecap="round"/>
+<line class="ink" x1="560" y1="140" x2="572" y2="140" stroke-width="5.5" stroke-linecap="round"/>
+
+<path class="ink-fill" d="M130 138 L133 128 L136 138 L146 141 L136 144 L133 154 L130 144 L120 141Z"/>
+
+</svg>

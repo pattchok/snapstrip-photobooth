@@ -1,26 +1,229 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fff8f0;
+  --foreground: #2a2a2a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-cream: #fff8f0;
+  --color-ink: #2a2a2a;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Theme colors */
+  --color-strawberry-bg: #fff0f3;
+  --color-strawberry-1: #e8456b;
+  --color-strawberry-2: #ff8fa4;
+  --color-strawberry-3: #ffd1dc;
+
+  --color-lemon-bg: #fffde8;
+  --color-lemon-1: #f5c842;
+  --color-lemon-2: #ff9e2c;
+  --color-lemon-3: #7ec8a0;
+
+  --color-blue-bg: #eaf4ff;
+  --color-blue-1: #4a9fe8;
+  --color-blue-2: #7cc4fa;
+  --color-blue-3: #ff6b8a;
+
+  --color-mint-bg: #edfcf5;
+  --color-mint-1: #3dbea0;
+  --color-mint-2: #7edec0;
+  --color-mint-3: #f5c842;
+
+  --color-grape-bg: #f3eeff;
+  --color-grape-1: #8b6cc1;
+  --color-grape-2: #b99df0;
+  --color-grape-3: #ff8fa4;
+
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-gaegu), cursive;
+}
+
+/* Doodle button base */
+.btn-doodle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border: 3px solid var(--foreground);
+  border-radius: 12px;
+  font-family: var(--font-gaegu), cursive;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 3px 3px 0px var(--foreground);
+  background: white;
+  color: var(--foreground);
+}
+
+.btn-doodle:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px var(--foreground);
+}
+
+.btn-doodle:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px var(--foreground);
+}
+
+.btn-doodle-primary {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.btn-doodle-lg {
+  padding: 0.6rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 16px;
+  box-shadow: 4px 4px 0px var(--foreground);
+}
+
+.btn-doodle-lg:hover {
+  box-shadow: 3px 3px 0px var(--foreground);
+}
+
+.btn-doodle-lg:active {
+  box-shadow: 0px 0px 0px var(--foreground);
+}
+
+/* Doodle card */
+.card-doodle {
+  border: 3px solid var(--foreground);
+  border-radius: 14px;
+  background: white;
+  padding: 1rem;
+}
+
+.card-doodle-selected {
+  box-shadow: 4px 4px 0px var(--foreground);
+}
+
+/* Heading font (Patrick Hand for big titles) */
+.font-heading {
+  font-family: var(--font-patrick-hand), cursive;
+}
+
+/* Body font (Gaegu for everything else) */
+.font-body {
+  font-family: var(--font-gaegu), cursive;
+}
+
+/* Countdown animation */
+@keyframes countdown-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.countdown-number {
+  animation: countdown-pop 0.4s ease-out;
+}
+
+/* Flash effect */
+@keyframes flash {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.flash-overlay {
+  animation: flash 0.3s ease-out forwards;
+}
+
+/* Fade in */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+/* Photo thumbnail slide animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Spinner */
+@keyframes spin-doodle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-doodle {
+  animation: spin-doodle 1.2s linear infinite;
+}
+
+/* Toast */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-toast {
+  animation: toast-in 0.2s ease-out;
 }
