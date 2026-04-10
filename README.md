@@ -12,7 +12,7 @@ built this as a fun side project because i love photo booths but there are not m
 - open space at the bottom for dates, names, or whatever you want
 - download your strip, share a link, or generate a QR code
 
-## stack
+## tech stack
 
 - **next.js** + **typescript** + **tailwind css**
 - browser camera api (`getUserMedia`)
