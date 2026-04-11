@@ -13,7 +13,6 @@ export default function SharePage() {
   const { state } = useBooth();
   const color = getColorById(state.themeId, state.colorId);
   const imageUrl = state.compositeImage;
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
   useEffect(() => {
     if (!imageUrl) {
@@ -48,7 +47,7 @@ export default function SharePage() {
           />
         </div>
 
-        <ShareActions imageUrl={imageUrl} shareUrl={shareUrl} color={color} />
+        <ShareActions imageUrl={imageUrl} color={color} />
 
         <Link href="/theme" className="btn-doodle">
           <svg

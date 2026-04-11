@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import QRCode from "qrcode";
+import { useState, useEffect } from "react";
 import { ColorVariant } from "@/lib/themes";
 
 interface ShareActionsProps {
   imageUrl: string;
-  shareUrl: string;
   color: ColorVariant;
 }
 
@@ -29,29 +27,6 @@ function DownloadIcon() {
   );
 }
 
-function QRIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3" y="3" width="7" height="7" rx="1" />
-      <rect x="14" y="3" width="7" height="7" rx="1" />
-      <rect x="3" y="14" width="7" height="7" rx="1" />
-      <rect x="14" y="14" width="3" height="3" rx="0.5" />
-      <line x1="21" y1="14" x2="21" y2="17" />
-      <line x1="14" y1="21" x2="17" y2="21" />
-      <line x1="21" y1="21" x2="21" y2="21" />
-    </svg>
-  );
-}
-
 function LinkIcon() {
   return (
     <svg
@@ -70,25 +45,48 @@ function LinkIcon() {
   );
 }
 
-export function ShareActions({ imageUrl, shareUrl, color }: ShareActionsProps) {
-  const [showQR, setShowQR] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
-  const qrRef = useRef<HTMLDivElement>(null);
+async function uploadToImgBB(dataUrl: string): Promise<string> {
+  // Convert data URL to blob
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
 
+  // Send blob to our API route
+  const uploadRes = await fetch("/api/upload", {
+    method: "POST",
+    body: blob,
+  });
+  const data = await uploadRes.json();
+
+  if (!uploadRes.ok) {
+    throw new Error(data.error || "Upload failed");
+  }
+  return data.url;
+}
+
+export function ShareActions({ imageUrl, color }: ShareActionsProps) {
+  const [copied, setCopied] = useState(false);
+  const [hostedUrl, setHostedUrl] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  // Upload automatically on mount
   useEffect(() => {
-    if (showQR && !qrDataUrl) {
-      QRCode.toDataURL(shareUrl, {
-        width: 256,
-        margin: 2,
-        color: {
-          dark: color.accent,
-          light: color.bg,
-        },
-        errorCorrectionLevel: "M",
-      }).then(setQrDataUrl);
-    }
-  }, [showQR, shareUrl, color, qrDataUrl]);
+    let cancelled = false;
+    setUploading(true);
+
+    uploadToImgBB(imageUrl)
+      .then((url) => {
+        if (!cancelled) setHostedUrl(url);
+      })
+      .catch((e) => {
+        if (!cancelled) setUploadError(e instanceof Error ? e.message : "Upload failed");
+      })
+      .finally(() => {
+        if (!cancelled) setUploading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [imageUrl]);
 
   const handleDownload = () => {
     const a = document.createElement("a");
@@ -99,31 +97,47 @@ export function ShareActions({ imageUrl, shareUrl, color }: ShareActionsProps) {
     document.body.removeChild(a);
   };
 
-  const handleCopyLink = async () => {
+  const [waitingForUpload, setWaitingForUpload] = useState(false);
+
+  const copyToClipboard = async (url: string) => {
     try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      await navigator.clipboard.writeText(url);
     } catch {
       const input = document.createElement("input");
-      input.value = shareUrl;
+      input.value = url;
       document.body.appendChild(input);
       input.select();
       document.execCommand("copy");
       document.body.removeChild(input);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+    }
+    setCopied(true);
+    setWaitingForUpload(false);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // If user clicked while uploading, copy as soon as it's ready
+  useEffect(() => {
+    if (waitingForUpload && hostedUrl) {
+      copyToClipboard(hostedUrl);
+    }
+  }, [waitingForUpload, hostedUrl]);
+
+  const handleCopyLink = async () => {
+    if (hostedUrl) {
+      copyToClipboard(hostedUrl);
+    } else if (uploading) {
+      setWaitingForUpload(true);
     }
   };
 
-  const handleDownloadQR = () => {
-    if (!qrDataUrl) return;
-    const a = document.createElement("a");
-    a.href = qrDataUrl;
-    a.download = `snapstrip-qr-${Date.now()}.png`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  const handleRetry = () => {
+    setUploadError(null);
+    setHostedUrl(null);
+    setUploading(true);
+    uploadToImgBB(imageUrl)
+      .then(setHostedUrl)
+      .catch((e) => setUploadError(e instanceof Error ? e.message : "Upload failed"))
+      .finally(() => setUploading(false));
   };
 
   return (
@@ -134,16 +148,31 @@ export function ShareActions({ imageUrl, shareUrl, color }: ShareActionsProps) {
           Download
         </button>
 
-        <button onClick={() => setShowQR(!showQR)} className="btn-doodle">
-          <QRIcon />
-          QR Code
-        </button>
-
-        <button onClick={handleCopyLink} className="btn-doodle relative">
-          <LinkIcon />
+        <button
+          onClick={handleCopyLink}
+          disabled={uploadError !== null}
+          className="btn-doodle relative"
+        >
+          {waitingForUpload ? (
+            <div
+              className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin"
+              style={{ borderColor: color.accent, borderTopColor: "transparent" }}
+            />
+          ) : (
+            <LinkIcon />
+          )}
           {copied ? "Copied!" : "Copy link"}
         </button>
       </div>
+
+      {uploadError && (
+        <div className="flex items-center gap-2">
+          <p className="text-sm text-red-500">Failed to upload</p>
+          <button onClick={handleRetry} className="btn-doodle text-sm">
+            Retry
+          </button>
+        </div>
+      )}
 
       {copied && (
         <div
@@ -154,47 +183,6 @@ export function ShareActions({ imageUrl, shareUrl, color }: ShareActionsProps) {
           }}
         >
           Link copied to clipboard!
-        </div>
-      )}
-
-      {showQR && (
-        <div
-          ref={qrRef}
-          className="animate-fade-in card-doodle p-6 flex flex-col items-center gap-4"
-          style={{
-            backgroundColor: color.bg,
-            borderColor: color.accent,
-          }}
-        >
-          {qrDataUrl ? (
-            <>
-              <img
-                src={qrDataUrl}
-                alt="QR Code"
-                width={200}
-                height={200}
-                className="rounded-lg"
-              />
-              <p className="text-xs text-center opacity-60 max-w-[200px]">
-                Scan to view your photo strip
-              </p>
-              <button
-                onClick={handleDownloadQR}
-                className="btn-doodle text-sm"
-              >
-                <DownloadIcon />
-                Download QR
-              </button>
-            </>
-          ) : (
-            <div
-              className="w-8 h-8 border-3 border-t-transparent rounded-full spinner-doodle"
-              style={{
-                borderColor: color.accent,
-                borderTopColor: "transparent",
-              }}
-            />
-          )}
         </div>
       )}
     </div>
