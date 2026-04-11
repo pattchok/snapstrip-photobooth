@@ -138,7 +138,7 @@ export default function LandingPage() {
             <SnapIcon />
             <h3 className="text-xl font-bold">Snap</h3>
             <p className="text-sm text-center" style={{ color: "#666" }}>
-              Strike 4 poses
+              Strike fun poses
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export default function LandingPage() {
             <ShareIcon />
             <h3 className="text-xl font-bold">Share</h3>
             <p className="text-sm text-center" style={{ color: "#666" }}>
-              Download your strip or send it with a QR code
+              Download or copy link to share your strip!
             </p>
           </div>
         </div>
