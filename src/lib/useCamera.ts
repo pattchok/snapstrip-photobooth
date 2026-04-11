@@ -27,12 +27,6 @@ export function useCamera() {
 
       streamRef.current = stream;
       setPermissionState("granted");
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
-        setIsReady(true);
-      }
     } catch (err) {
       setPermissionState("denied");
       setError(
@@ -40,6 +34,30 @@ export function useCamera() {
       );
     }
   }, []);
+
+  // Attach stream to video element once both are available
+  useEffect(() => {
+    const video = videoRef.current;
+    const stream = streamRef.current;
+    if (!video || !stream || isReady) return;
+    if (video.srcObject === stream) return;
+
+    video.srcObject = stream;
+    // Use a small delay to ensure the video element is fully mounted
+    const timer = setTimeout(() => {
+      video.play()
+        .then(() => setIsReady(true))
+        .catch(() => {
+          // Autoplay may be blocked — wait for user interaction
+          const onClick = () => {
+            video.play().then(() => setIsReady(true));
+            document.removeEventListener("click", onClick);
+          };
+          document.addEventListener("click", onClick);
+        });
+    }, 100);
+    return () => clearTimeout(timer);
+  });
 
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
