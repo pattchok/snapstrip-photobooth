@@ -20,8 +20,8 @@ built this as a fun side project because i love photo booths but there are not m
 
 ## try it
 
-live at: *(coming soon)*
-
+live at: [snapstrip*
+](https://snapstrip-two.vercel.app/)
 ## status
 
 work in progress; building this in the open. contributions and ideas welcome!
