@@ -6,11 +6,10 @@ built this as a fun side project because i love photo booths but there are not m
 
 ## what it does
 
-- pick from 5 pastel color themes
+- pick your favorite theme
 - take 4 photos with a countdown timer
-- photos get assembled into a classic film strip with thick doodle-style borders
-- open space at the bottom for dates, names, or whatever you want
-- download your strip, share a link, or generate a QR code
+- photos get assembled into a classic film strip
+- download your strip or share a link
 
 ## tech stack
 
